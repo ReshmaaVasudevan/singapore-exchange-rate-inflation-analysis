@@ -14,9 +14,8 @@ containing imported inflation, using 10 years of monthly data
 
 ## Research Questions
 - Do SGD exchange rate movements directly affect consumer inflation?
-- Is the transmission channel direct (FX → CPI) or indirect 
-  (FX → IPI → CPI)?
-- How long does the transmission lag take?
+- Is the transmission indirect — through import prices (FX → IPI → CPI)?
+- How long is the transmission lag?
 
 ## Key Findings
 | Finding | Result |
@@ -28,23 +27,23 @@ containing imported inflation, using 10 years of monthly data
 | SGD/GBP → CPI | Significant at 5% level (β = −0.042) |
 
 **Conclusion:** Exchange rate shocks transmit to consumer 
-inflation *indirectly* through import prices, with a 2–4 month 
+inflation *indirectly* through import prices with a 2–4 month 
 delay — supporting the effectiveness of MAS's exchange-rate-based 
 monetary policy.
 
 ## Methodology
 ```
-1. Descriptive Analysis    — distribution plots, correlation heatmap
-2. Time Series Decomposition — trend, seasonal, residual (additive model)
-3. OLS Regression          — FX returns → CPI inflation & IPI inflation  
-4. Granger Causality Tests — FX → IPI, FX → CPI, IPI → CPI
-5. VAR Modelling           — multivariate dynamic relationships
-6. Impulse Response (IRF)  — shock propagation over 12-month horizon
+1. Descriptive Analysis       — distribution plots, correlation heatmap
+2. Time Series Decomposition  — trend, seasonal, residual (additive model)
+3. OLS Regression             — FX returns → CPI inflation & IPI inflation
+4. Granger Causality Tests    — FX → IPI, FX → CPI, IPI → CPI
+5. VAR Modelling              — multivariate dynamic relationships
+6. Impulse Response (IRF)     — shock propagation over 12-month horizon
 ```
 
 ## Regression Results Summary
 
-**CPI Inflation on Exchange Rate Returns (OLS)**
+**CPI Inflation on Exchange Rate Returns**
 | Variable | Coefficient | p-value |
 |----------|-------------|---------|
 | Intercept | 0.1169 | 0.001*** |
@@ -63,28 +62,23 @@ monetary policy.
 ## Data Sources
 | Dataset | Source | Frequency |
 |---------|--------|-----------|
-| SGD/USD, EUR, GBP, INR exchange rates | MAS (mas.gov.sg) | Daily → Monthly avg |
+| SGD/USD, EUR, GBP, INR rates | MAS (mas.gov.sg) | Daily → Monthly avg |
 | Consumer Price Index (CPI) | SingStat (singstat.gov.sg) | Monthly |
 | Import Price Index (IPI) | SingStat (singstat.gov.sg) | Monthly |
 | Sample period | 2014–2024 | 141 observations |
 
 ## Tech Stack
-- **R** — primary analysis (dplyr, ggplot2, xts, lubridate, 
-  vars, readxl)
-- **Python** — supporting EDA (Pandas, NumPy, Matplotlib, 
-  Seaborn, statsmodels)
-- Jupyter Notebook / R Markdown
+- **R** — full analysis pipeline
+- **Libraries:** readr, dplyr, ggplot2, xts, lubridate, 
+  vars, readxl, reshape2
 
 ## How to Run
-```bash
-# Python EDA
-pip install pandas numpy matplotlib seaborn statsmodels
-jupyter notebook exchange_rate_inflation_analysis.ipynb
+```r
+install.packages(c("readr", "dplyr", "ggplot2", "xts",
+                   "lubridate", "vars", "readxl", "reshape2"))
 
-# R analysis
-install.packages(c("readr","dplyr","ggplot2","xts",
-                   "lubridate","vars","readxl"))
-# Run exchange_rate_analysis.R
+# Open and run:
+source("exchange_rate_analysis.R")
 ```
 
 ## Project Structure
@@ -92,9 +86,8 @@ install.packages(c("readr","dplyr","ggplot2","xts",
 singapore-exchange-rate-inflation-analysis/
 │
 ├── data/
-│   └── final_I_hope.xlsx        # Combined MAS + SingStat dataset
-├── exchange_rate_inflation.ipynb # Python EDA and visualizations
-├── exchange_rate_analysis.R      # R econometric models
+│   └── final_I_hope.xlsx       # Combined MAS + SingStat dataset
+├── exchange_rate_analysis.R    # Full R analysis script
 └── README.md
 ```
 
@@ -103,16 +96,16 @@ singapore-exchange-rate-inflation-analysis/
 - CPI vs IPI comparison (dual-axis time series)
 - Correlation heatmap: exchange rates, CPI, IPI
 - Time series decomposition (trend, seasonal, residual)
-- Impulse response functions (CPI and IPI response to USD shock)
+- Impulse response functions (CPI and IPI to USD shock)
 
 ## Policy Implication
-Results support MAS's exchange-rate-based monetary framework. 
+Results support MAS's exchange-rate-based monetary framework.
 Import prices serve as the primary transmission channel from 
-external shocks to domestic inflation — meaning SGD appreciation 
-effectively dampens imported inflation, but with a 2–4 month lag.
+external shocks to domestic inflation — SGD appreciation 
+dampens imported inflation but with a 2–4 month lag.
 
 ## References
 - MAS Statistics: https://www.mas.gov.sg/statistics
 - SingStat: https://www.singstat.gov.sg
-- CONG, D.C.G. (2024). Exchange rate pass-through: Evidence 
-  from Singapore. NUS Libraries.
+- CONG, D.C.G. (2024). Exchange rate pass-through: 
+  Evidence from Singapore. NUS Libraries.
